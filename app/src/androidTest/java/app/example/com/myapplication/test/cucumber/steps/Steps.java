@@ -1,4 +1,4 @@
-package app.example.com.myapplication.test;
+package app.example.com.myapplication.test.cucumber.steps;
 
 /**
  * Created by gutaraposo on 27/09/16.
@@ -7,12 +7,15 @@ import app.example.com.myapplication.R;
 
 import android.app.Activity;
 import android.support.test.rule.ActivityTestRule;
+import android.util.Log;
 
 import app.example.com.myapplication.MainActivity;
 import app.example.com.myapplication.test.ActivityFinisher;
 
 import org.junit.Rule;
 
+import app.example.com.myapplication.test.cucumber.pages.BasePage;
+import app.example.com.myapplication.test.cucumber.pages.MainPage;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -26,24 +29,20 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 public class Steps {
 
-    private Activity currentActivity;
-
-
-    @Rule
-    public static ActivityTestRule<?> mActivityRule = new ActivityTestRule<>(
-            MainActivity.class);
+    BasePage mPage = null;
 
 
     @Before
     public void setUp() throws Exception {
-        mActivityRule.launchActivity(null);
+        mPage = new MainPage();
+        Log.v("PASSEIPORAQUI","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     }
     @Given("^I've launched \"([^\"]*)\"$") public void I_ve_launched_(String activityClassName)
-            throws InterruptedException {
-            mActivityRule.launchActivity(null);
+            throws Throwable {
+        ((MainPage)mPage).clickFabButton();
     }
     @When("^I click (.*)") public void I_click_(String id) throws Throwable {
-        onView(withId(R.id.fab)).perform(click());
+
     }
 
     /**
